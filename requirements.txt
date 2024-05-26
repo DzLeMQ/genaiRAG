@@ -1,0 +1,6 @@
+langchain
+langchain_community
+unstructured # Document loading
+chromadb # Vector storage
+urllib3==1.26
+tiktoken  # For embeddings
