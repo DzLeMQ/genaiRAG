@@ -1,7 +1,9 @@
 Project Summary
-* GenAI app runs end to end locally 100% using RAG & ollama
+* GenAIRAG app runs end to end locally 100% using RAG & ollama
 * Compatible with CPU/GPU
-* Prompt answers based on uploaded docs stored as vector database using RAG framework.
+* Prompt answered in two ways:
+* 1.if answer found in the local vector database, llm will use it for answer
+* 2.if answer not found in local vector database, llm will use its trained trained material for answer.
 
 Setup & Codes Running
 * Install anaconda
@@ -10,5 +12,5 @@ Setup & Codes Running
 * Activate virtual env
 * Run pip install requirement file in virtual env
 * Checkout this code to a project directory 
-* Depending on your dev tool, the order of file running is create_RAG_db then query_RAG_DB
-* When query db, you must provide a prompt e.g. python query_RAG_db.py 'who is Dorothy?'
+* 1. run create_RAG_db.py to create a RAG_Vector database
+  2. launch the app in command prompt: python query_RAG_db.py'
