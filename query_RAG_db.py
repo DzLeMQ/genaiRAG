@@ -2,9 +2,10 @@
 import streamlit as st
 from langchain_core.messages import HumanMessage, AIMessage
 from dotenv import load_dotenv
-from langchain_community.vectorstores.chroma import Chroma
-from langchain_community.embeddings import GPT4AllEmbeddings
-from langchain_community.llms import Ollama
+import langchain_community
+#from langchain_community.vectorstores.chroma import Chroma
+#from langchain_community.embeddings import GPT4AllEmbeddings
+#from langchain_community.llms import Ollama
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 import warnings
