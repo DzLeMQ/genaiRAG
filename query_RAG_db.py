@@ -2,7 +2,6 @@
 import streamlit as st
 from langchain_core.messages import HumanMessage, AIMessage
 from dotenv import load_dotenv
-import langchain_community
 from langchain_community.vectorstores.chroma import Chroma
 from langchain_community.embeddings import GPT4AllEmbeddings
 from langchain_community.llms import Ollama
@@ -42,9 +41,8 @@ def get_reponse(query_text, chat_history):
 
         response_text = model.invoke(prompt)
         sources = [doc.metadata.get("source", None) for doc, _score in results]
-        print("2")
 
-        formatted_response = f"Response: {response_text}\nSources: {sources}"
+        formatted_response = f"Response: {response_text}\RAG Context - Sources: {sources}"
 
         return (formatted_response)
 
@@ -52,8 +50,8 @@ def main():
     load_dotenv()
     if "chat_history" not in st.session_state:
         st.session_state.chat_history=[]
-    st.set_page_config(page_title="RAG Bot", page_icon="streamlit")
-    st.title ("RAG Bot")
+    st.set_page_config(page_title="GenAI RAG", page_icon=':coffee:')
+    st.title ("GenAI RAG")
 
     #Chatting
     for message in st.session_state.chat_history:
