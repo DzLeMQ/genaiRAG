@@ -1,3 +1,4 @@
+gpt4all
 langchain
 langchain_community
 unstructured
