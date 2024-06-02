@@ -24,27 +24,30 @@ Answer the question based on trained model: {user_question}
 """
 
 def get_reponse(query_text, chat_history):
+    try:
 
-    # Search the DB.
-    results = db.similarity_search_with_relevance_scores(query_text, k=3)
-    model = Ollama(model="llama2")
+        # Search the DB.
+        results = db.similarity_search_with_relevance_scores(query_text, k=3)
+        model = Ollama(model="llama2")
 
-    # if no answer found in RAG DB then answered by native llm
-    if len(results) == 0 or results[0][1] < 0.4:
-        prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE_LLM)
-        chain = prompt_template | model | StrOutputParser()
-        return chain.invoke({"user_question": query_text})
-    else:
-        context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
-        prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE_RAG)
-        prompt = prompt_template.format(context=context_text, question=query_text)
+        # if no answer found in RAG DB then answered by native llm
+        if len(results) == 0 or results[0][1] < 0.4:
+            prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE_LLM)
+            chain = prompt_template | model | StrOutputParser()
+            return chain.invoke({"user_question": query_text})
+        else:
+            context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+            prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE_RAG)
+            prompt = prompt_template.format(context=context_text, question=query_text)
 
-        response_text = model.invoke(prompt)
-        sources = [doc.metadata.get("source", None) for doc, _score in results]
+            response_text = model.invoke(prompt)
+            sources = [doc.metadata.get("source", None) for doc, _score in results]
 
-        formatted_response = f"Response: {response_text} RAG Context - Sources: {sources}"
+            formatted_response = f"Response: {response_text} RAG Context - Sources: {sources}"
 
-        return (formatted_response)
+            return (formatted_response)
+    except Exception as e:
+        print("Error: ",e)
 
 def main():
     load_dotenv()
