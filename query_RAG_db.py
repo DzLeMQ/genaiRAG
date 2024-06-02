@@ -42,7 +42,7 @@ def get_reponse(query_text, chat_history):
         response_text = model.invoke(prompt)
         sources = [doc.metadata.get("source", None) for doc, _score in results]
 
-        formatted_response = f"Response: {response_text}\RAG Context - Sources: {sources}"
+        formatted_response = f"Response: {response_text} RAG Context - Sources: {sources}"
 
         return (formatted_response)
 
@@ -52,28 +52,29 @@ def main():
         st.session_state.chat_history=[]
     st.set_page_config(page_title="GenAI RAG", page_icon=':coffee:')
     st.title ("GenAI RAG")
+    try:
+        #Chatting
+        for message in st.session_state.chat_history:
+            if isinstance(message, HumanMessage):
+                with st.chat_message("Human"):
+                    st.markdown(message.content)
+            else:
+                 with st.chat_message("AI"):
+                    st.markdown(message.content)
 
-    #Chatting
-    for message in st.session_state.chat_history:
-        if isinstance(message, HumanMessage):
+        query_text = st.chat_input("Type your question here...")
+        if query_text is not None and query_text !="":
+            st.session_state.chat_history.append(HumanMessage(query_text))
+
             with st.chat_message("Human"):
-                st.markdown(message.content)
-        else:
-             with st.chat_message("AI"):
-                st.markdown(message.content)
+                st.markdown(query_text)
 
-    query_text = st.chat_input("Type your question here...")
-    if query_text is not None and query_text !="":
-        st.session_state.chat_history.append(HumanMessage(query_text))
-
-        with st.chat_message("Human"):
-            st.markdown(query_text)
-
-        with st.chat_message("AI"):
-            ai_text = get_reponse(query_text,st.session_state.chat_history)
-            st.markdown(ai_text)
-        st.session_state.chat_history.append(AIMessage(ai_text))
-
+            with st.chat_message("AI"):
+                ai_text = get_reponse(query_text,st.session_state.chat_history)
+                st.markdown(ai_text)
+            st.session_state.chat_history.append(AIMessage(ai_text))
+    except Exception as e:
+        print("Error: ",e)
 
 if __name__ == "__main__":
     main()
