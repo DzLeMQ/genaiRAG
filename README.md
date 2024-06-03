@@ -3,7 +3,7 @@ Project Summary
 * Compatible with CPU/GPU
 * Prompt answered in two ways:
 * 1.if answer found in the local vector database, llm will use it for answer
-* 2.if answer not found in local vector database, llm will use its trained trained material for answer.
+* 2.if answer not found in local vector database, llm will use its trained intelligence.
 
 Setup & Codes Running
 * Install anaconda
