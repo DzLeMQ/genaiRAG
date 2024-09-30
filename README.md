@@ -1,9 +1,9 @@
 Project Summary
-* GenAIRAG app runs end to end locally 100% using RAG & ollama
+* GenAIRAG app runs locally 100% using RAG & ollama
 * Compatible with CPU/GPU
 * Prompt answered in two ways:
-* 1.if answer found in the local vector database, llm will use it for answer
-* 2.if answer not found in local vector database, llm will use its trained intelligence.
+* 1.if answer found in the local vector database, llm will use it to answer
+* 2.if answer is not found in local vector database, llm will use its trained intelligence.
 
 Setup & Codes Running
 * Install anaconda
